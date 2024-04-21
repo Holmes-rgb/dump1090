@@ -167,7 +167,7 @@
         });
     }
 
-    function initialize() {
+    function initialize() {``
         Map = L.map('map_canvas').setView([44.0, -73.0], 8);
 
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -190,9 +190,12 @@
     <div id="map_canvas" style="width:80%; height:100%"></div>
     <div id="info">
       <div>
-        <h1>Dump1090</h1>
+        <h1>Pidar</h1>
         <p id="geninfo"></p>
         <p id="selinfo">Click on a plane for info.</p>
+        <video controls="" autoplay="" name="media">
+          <source src="http://10.42.0.66:8080/KBTV%20Del/Gnd/Twr/App.mp3" type="audio/mpeg">
+        </video>
       </div>
     </div>
   </body>
