@@ -102,6 +102,54 @@
         i.innerHTML = NumPlanes+' planes on screen.';
     }
 
+    // Convert ICAO hex to Reg number
+    function getRegistration(hex){
+      let reg = "N";
+      const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+      const len1 = 101711;
+      const lenAlpha = 25;
+      const length = [10111,951,35,1,1];
+      const skip = [601,601,601,25,1]
+
+      hex.toUpperCase().trim();
+      if (hex < "A00001" || hex > "ADF7C7"){
+        return "";
+      }
+
+      let d1 = parseInt(hex,16) -1;
+      let d2 = Math.floor(d1/len1);
+
+      reg += (d2 + 1).toString();
+
+      d1 -= d2 * len1;
+      let index = 0;
+
+      while (d1 >= skip[index]) {
+        d1 -= skip[index];
+        d2 = Math.floor(d1 / length[index]);
+        reg += d2.toString();
+        d1 -= d2 * length[index];
+        index++;
+      }
+
+      if (d1 > 0) {
+        d1--;
+
+        if (index === 3) {
+          reg += letters.charAt(d1);
+        } else {
+          reg += letters.charAt(Math.floor(d1 / lenAlpha));
+          const d3 = d1 % lenAlpha;
+
+          if (d3 !== 0) {
+            reg += letters.charAt(d3 - 1);
+          }
+        }
+      }
+
+      return reg;
+    }
+
     function refreshSelectedInfo() {
         var i = document.getElementById('selinfo');
         var p = Planes[Selected];
@@ -109,8 +157,9 @@
         if (!p) return;
         var html = 'ICAO: '+p.hex+'<br>';
         if (p.flight.length) {
-            html += '<b>'+p.flight+'</b><br>';
+            html += 'Flight: ' + '<b>'+p.flight+'</b><br>';
         }
+        html += 'Registration: '+ getRegistration(p.hex) +'<br>';
         html += 'Altitude: '+p.altitude+' feet<br>';
         html += 'Speed: '+p.speed+' knots<br>';
         html += 'Coordinates: '+p.lat+', '+p.lon+'<br>';
