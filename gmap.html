@@ -113,7 +113,7 @@
 
       hex.toUpperCase().trim();
       if (hex < "A00001" || hex > "ADF7C7"){
-        return "";
+        return "invalid";
       }
 
       let d1 = parseInt(hex,16) -1;
