@@ -112,10 +112,10 @@
       const skip = [601,601,601,25,1]
 
       hex.toUpperCase().trim();
-      // if (hex < "A00001" || hex > "ADF7C7"){
-      //   return "invalid";
-      // }
-
+      if (hex < "A00001" || hex > "ADF7C7"){
+        return "International";
+      }
+      hex = hex.substring(1,5);
       let d1 = parseInt(hex,16) -1;
       let d2 = Math.floor(d1/len1);
 
