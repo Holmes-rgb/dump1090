@@ -104,7 +104,7 @@
 
     // Convert ICAO hex to Reg number
     function getRegistration(hex){
-      let reg = "N";
+      let reg = 'N';
       const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
       const len1 = 101711;
       const lenAlpha = 25;
@@ -112,23 +112,23 @@
       const skip = [601,601,601,25,1]
 
       hex.toUpperCase().trim();
-      if (hex < "A00001" || hex > "ADF7C7"){
+      if (parseInt(hex,16) < parseInt("A00001", 16) || parseInt(hex,16) > parseInt("ADF7C7",16)){
         return "International";
       }
-      hex = hex.substring(1,5);
+      hex = hex.substring(1,6);
       let d1 = parseInt(hex,16) -1;
-      let d2 = Math.floor(d1/len1);
+      let d2 = Math.floor(d1 / len1);
 
       reg += (d2 + 1).toString();
 
-      d1 -= d2 * len1;
+      d1 = d1 - (d2 * len1);
       let index = 0;
 
       while (d1 >= skip[index]) {
-        d1 -= skip[index];
+        d1 = d1 - skip[index];
         d2 = Math.floor(d1 / length[index]);
         reg += d2.toString();
-        d1 -= d2 * length[index];
+        d1 = d1 - (d2 * length[index]);
         index++;
       }
 
@@ -136,7 +136,7 @@
         d1--;
 
         if (index === 3) {
-          reg += letters.charAt(d1);
+          reg += letters.substring(d1,1);
         } else {
           reg += letters.charAt(Math.floor(d1 / lenAlpha));
           const d3 = d1 % lenAlpha;
