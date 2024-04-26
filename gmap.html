@@ -8,8 +8,8 @@
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
       .plane-icon {
-        padding:0px;
-        margin:0px;
+        padding:0.3em;
+        margin:0.3em;
       }
       #map_canvas { height: 100% }
       #info {
@@ -67,7 +67,7 @@
 
         /* Give a border to the selected plane. */
         if (Selected == plane.hex) {
-            selhtml = 'border:1px dotted #0000aa; border-radius:10px;';
+            selhtml = 'border:0.3em dotted #0000aa; border-radius:10px;';
         } else {
             selhtml = '';
         }
@@ -166,7 +166,7 @@
         i.innerHTML = html;
     }
 
-    function fetchData() {
+    function fetchPlanes() {
         $.getJSON('/data.json', function(data) {
             var stillhere = {}
             for (var j=0; j < data.length; j++) {
@@ -216,21 +216,28 @@
         });
     }
 
+    function fetchAirports(){
+      var airportsGeoJson = new L.GeoJSON.AJAX("airports.geojso");
+      airportsGeoJson.addTo(map);
+    }
+
     function initialize() {``
         Map = L.map('map_canvas').setView([44.0, -73.0], 8);
 
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-	    maxZoom: 18,
-	    id: 'mapbox/streets-v11',
-	    accessToken: 'your.mapbox.access.token'
-	}).addTo(Map);
+	  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	      maxZoom: 18,
+	      id: 'mapbox/streets-v11',
+	      accessToken: 'your.mapbox.access.token'
+	  }).addTo(Map);
 
-        /* Setup our timer to poll from the server. */
-        window.setInterval(function() {
-            fetchData();
-            refreshGeneralInfo();
-        }, 100);
+      fetchAirports();
+
+      /* Setup our timer to poll from the server. */
+      window.setInterval(function() {
+          fetchPlanes();
+          refreshGeneralInfo();
+      }, 100);
     }
 
     </script>

@@ -1901,7 +1901,7 @@ void snipMode(int level) {
 }
 
 /* ============================= Networking =================================
- * Note: here we risregard any kind of good coding practice in favor of
+ * Note: here we disregard any kind of good coding practice in favor of
  * extreme simplicity, that is:
  *
  * 1) We only rely on the kernel buffers for our I/O without any kind of
