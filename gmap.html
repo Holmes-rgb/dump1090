@@ -39,6 +39,7 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="/js/leaflet-0.7.2/leaflet.ajax.min.js"></script>
     <script type="text/javascript">
     Map=null;
     CenterLat=45.0;
@@ -216,8 +217,10 @@
         });
     }
 
-    function fetchAirports(){
+    function getAirports(){
 
+      let airportsGeoJson = new L.GeoJSON.ajax("airports.geojson");
+      airportsGeoJson.addTo(Map);
     }
 
     function initialize() {
@@ -230,8 +233,7 @@
 	      accessToken: 'your.mapbox.access.token'
 	  }).addTo(Map);
 
-      var airportsGeoJson = new L.GeoJSON.AJAX("../airports.geojson");
-      airportsGeoJson.addTo(Map);
+      getAirports();
 
       /* Setup our timer to poll from the server. */
       window.setInterval(function() {
