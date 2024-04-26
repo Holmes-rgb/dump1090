@@ -39,7 +39,7 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-    <script src="/js/leaflet-0.7.2/leaflet.ajax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js" integrity="sha512-Abr21JO2YqcJ03XGZRPuZSWKBhJpUAR6+2wH5zBeO4wAw4oksr8PRdF+BKIRsxvCdq+Mv4670rZ+dLnIyabbGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
     Map=null;
     CenterLat=45.0;
@@ -217,11 +217,7 @@
         });
     }
 
-    function getAirports(){
 
-      let airportsGeoJson = new L.GeoJSON.ajax("airports.geojson");
-      airportsGeoJson.addTo(Map);
-    }
 
     function initialize() {
         Map = L.map('map_canvas').setView([44.0, -73.0], 8);
@@ -233,7 +229,7 @@
 	      accessToken: 'your.mapbox.access.token'
 	  }).addTo(Map);
 
-      getAirports();
+      L.GeoJSON.ajax("airports.geojson").addTo(Map);
 
       /* Setup our timer to poll from the server. */
       window.setInterval(function() {
